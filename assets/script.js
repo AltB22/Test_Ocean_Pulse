@@ -1,20 +1,8 @@
-
-// // // var stormGlassEndpoint = "https://api.stormglass.io/v2"
-// // var stormGlassApiKey = "5c5365e4-a940-11ed-a138-0242ac130002-5c53665c-a940-11ed-a138-0242ac130002"
-// var searchWeatherButton = document.getElementById("search-by-city-button");
-// var clearCityHistoryButton = document.getElementById("clear-history-btn");
-// let cityHistoryArr = [];//establishes empty array to house cities in local storage
-// var surfSpot = "";
-// var currentSurfSpot = "";
-// // var currentCitySearch = "";//establishes the most recent search for separate storage in local to persist the weather data on the page
-// // var currentSurfReport = document.getElementById("current-spot-search");
-// // var todayWeatherIcon = document.getElementById("current-icon");
-// // var fiveDayParentEl = document.getElementById("five-day-forecast");
-var searchWeatherButton = document.getElementById("search-by-city-button");
-var clearCityHistoryButton = document.getElementById("clear-history-btn");
+const searchWeatherButton = document.getElementById("search-by-city-button");
+const clearCityHistoryButton = document.getElementById("clear-history-btn");
 let cityHistoryArr = [];
-var surfSpot = "";
-var currentSurfSpot = ""; // Define currentSurfSpot as a global variable
+let surfSpot = "";
+let currentSurfSpot = ""; // Define currentSurfSpot as a global variable
 
 function getCardinalDirection(degrees) {
     const degreeRanges = [
@@ -45,62 +33,6 @@ function getCardinalDirection(degrees) {
     return "N"; // default direction if degrees is not within any of the defined ranges
 }
 
-
-// function handleSearchButton(event) {
-//     event.preventDefault();
-
-//    surfSpot = document.getElementById("searched-city-input").value;
-
-//     if (surfSpot) {
-//         getSurfReport(surfSpot)//passes cityName to getSurfReport
-//         // cityName.value = "";
-//     } else {
-//         prompt("Surf spot search field required");
-//     }
-// }
-// currentSurfSpot = surfSpot
-// async function getSurfReport(surfSpot) {
-//     if(surfSpot === "Ocean Beach") {
-//         let lat = 37.75545
-//         let lng = -122.5292
-//         const params = 'swellHeight,swellPeriod,swellDirection';
-//         const source = "noaa";
-//         // const currentHour = "end";
-//         // &end=${currentHour}
-//    const response = await fetch(`https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}`, {
-//   headers: {
-//     'Authorization': "5c5365e4-a940-11ed-a138-0242ac130002-5c53665c-a940-11ed-a138-0242ac130002"
-//   }
-// })
-// const surfReport = await response.json();
-
-// // console.log(surfReport.swellHeight)
-// renderSurfForecast(surfReport);
-// return surfReport;
-// };
-// }
-
-// function renderSurfForecast(surfReport) {
-//     // const currentSurfSpot = surfSpot
-//     const currentSurfReportElement = document.getElementById('current-surf-report');
-//     if (surfReport && surfReport.hours && surfReport.hours.length > 0) {
-//       const currentTimePeriod = surfReport.hours[0];
-//       const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
-//       const currentSwellHeight = currentTimePeriod.swellHeight.noaa;
-//       const currentSwellPeriod = currentTimePeriod.swellPeriod.noaa;
-//       const currentSurfReportHTML = 
-//       `<h2>${currentSurfSpot}</h2>`
-//         `<p>${currentSwellHeight}ft @ ${currentSwellPeriod}secs ${getCardinalDirection(currentSwellDirection)}</p>`;
-    
-//       currentSurfReportElement.innerHTML = currentSurfReportHTML;
-//     } else {
-//       currentSurfReportElement.innerHTML = 'No surf report available';
-//     }
-//   }
-  
-
-
-// searchWeatherButton.addEventListener('click', handleSearchButton)
 
 function handleSearchButton(event) {
     event.preventDefault();
