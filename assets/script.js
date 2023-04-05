@@ -50,7 +50,7 @@ function handleSearchButton(event) {
     if (surfSpot === "Ocean Beach" || "ocean beach" || "San Francisco" || "san francisco") {
       let lat = 37.75545;
       let lng = -122.5292;
-      const params = "swellHeight,swellPeriod,swellDirection";
+      const params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
       const source = "noaa";
   
       const response = await fetch(
@@ -71,18 +71,22 @@ function handleSearchButton(event) {
   }
   
   function renderSurfForecast(surfReport) {
-    const currentSurfReportElement = document.getElementById(
-      "current-surf-report"
-    );
+    const currentSurfReportElement = document.getElementById("current-surf-report");
   
     if (surfReport && surfReport.hours && surfReport.hours.length > 0) {
       const currentTimePeriod = surfReport.hours[0];
-      const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
       const currentSwellHeight = Math.ceil(3.28*currentTimePeriod.swellHeight.noaa);
       const currentSwellPeriod = Math.ceil(currentTimePeriod.swellPeriod.noaa);
-      const currentSurfReportHTML = `<h2>${currentSurfSpot}</h2><p>${currentSwellHeight}ft @ ${currentSwellPeriod}secs ${getCardinalDirection(
-        currentSwellDirection
-      )}</p>`;
+      const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
+      const currentWindSpeed = Math.ceil(currentTimePeriod.windSpeed.noaa);
+      const currentWindDirection = currentTimePeriod.windDirection.noaa;
+      const currentSurfReportHTML = 
+      `<h2>${currentSurfSpot}</h2>
+      <p>Swell Height: ${currentSwellHeight}ft.</p>
+      <p>Swell Period: @ ${currentSwellPeriod} secs</p>
+      <p>Swell Direction (of origin): ${getCardinalDirection(currentSwellDirection)}</p>
+      <p>Wind: ${currentWindSpeed} mph from the ${getCardinalDirection(currentWindDirection)}</p>`
+
   
       currentSurfReportElement.innerHTML = currentSurfReportHTML;
     } else {
