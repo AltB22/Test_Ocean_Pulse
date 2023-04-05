@@ -52,14 +52,19 @@ async function getSurfReport(surfSpot) {
     let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
     let source = "noaa";
     switch (surfSpot) {
-        case "Ocean Beach","ocean beach","San Francisco","san francisco":
+        case "Ocean Beach", "ocean beach","San Francisco","san francisco":
             lat = 37.75545;
             lng = -122.5292;
-          
+
         case "Ruggles","ruggles","Newport","newport":
-           lat = 41.37268;
-           lng = -71.2410;
-           
+            lat = 41.37268;
+            lng = -71.2410;
+
+        case "Bolinas","bolinas","RCA's","RCA","RCAs Beach","RCA Beach","Bobo","BOBO":
+            // 37.92265591264701, -122.73999987093488
+            lat = 37.92265591264701;
+            lng = -122.73999987093488;
+
     }
 
 
