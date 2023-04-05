@@ -47,7 +47,7 @@ function handleSearchButton(event) {
   }
   
   async function getSurfReport(surfSpot) {
-    if (surfSpot === "Ocean Beach" || "ocean beach") {
+    if (surfSpot === "Ocean Beach" || "ocean beach" || "San Francisco" || "san francisco") {
       let lat = 37.75545;
       let lng = -122.5292;
       const params = "swellHeight,swellPeriod,swellDirection";
