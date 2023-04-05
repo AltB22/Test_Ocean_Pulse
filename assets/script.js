@@ -146,8 +146,8 @@ function handleSearchButton(event) {
     if (surfReport && surfReport.hours && surfReport.hours.length > 0) {
       const currentTimePeriod = surfReport.hours[0];
       const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
-      const currentSwellHeight = currentTimePeriod.swellHeight.noaa;
-      const currentSwellPeriod = currentTimePeriod.swellPeriod.noaa;
+      const currentSwellHeight = Math.ceil(3.28*currentTimePeriod.swellHeight.noaa);
+      const currentSwellPeriod = Math.ceil(currentTimePeriod.swellPeriod.noaa);
       const currentSurfReportHTML = `<h2>${currentSurfSpot}</h2><p>${currentSwellHeight}ft @ ${currentSwellPeriod}secs ${getCardinalDirection(
         currentSwellDirection
       )}</p>`;
