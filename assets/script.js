@@ -36,64 +36,74 @@ function getCardinalDirection(degrees) {
 
 function handleSearchButton(event) {
     event.preventDefault();
-  
+
     surfSpot = document.getElementById("searched-city-input").value;
-  
+
     if (surfSpot) {
-      getSurfReport(surfSpot);
+        getSurfReport(surfSpot);
     } else {
-      prompt("Surf spot search field required");
+        prompt("Surf spot search field required");
     }
-  }
-  
-  async function getSurfReport(surfSpot) {
-    if (surfSpot === "Ocean Beach" || "ocean beach" || "San Francisco" || "san francisco") {
-      let lat = 37.75545;
-      let lng = -122.5292;
-      const params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
-      const source = "noaa";
-  
-      const response = await fetch(
+}
+
+async function getSurfReport(surfSpot) {
+    let lat = "";
+    let lng = "";
+    let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
+    let source = "noaa";
+    switch (surfSpot) {
+        case "Ocean Beach","ocean beach","San Francisco","san francisco":
+            lat = 37.75545;
+            lng = -122.5292;
+          
+        case "Ruggles","ruggles","Newport","newport":
+           lat = 41.37268;
+           lng = -71.2410;
+           
+    }
+
+
+    const response = await fetch(
         `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}`,
         {
-          headers: {
-            Authorization:
-              "5c5365e4-a940-11ed-a138-0242ac130002-5c53665c-a940-11ed-a138-0242ac130002",
-          },
+            headers: {
+                Authorization:
+                    "5c5365e4-a940-11ed-a138-0242ac130002-5c53665c-a940-11ed-a138-0242ac130002",
+            },
         }
-      );
-  
-      const surfReport = await response.json();
-      currentSurfSpot = surfSpot; // Assign the value of surfSpot to currentSurfSpot
-      renderSurfForecast(surfReport);
-      return surfReport;
-    }
-  }
-  
-  function renderSurfForecast(surfReport) {
+    );
+
+    const surfReport = await response.json();
+    currentSurfSpot = surfSpot; // Assign the value of surfSpot to currentSurfSpot
+    renderSurfForecast(surfReport);
+    return surfReport;
+}
+
+
+function renderSurfForecast(surfReport) {
     const currentSurfReportElement = document.getElementById("current-surf-report");
-  
+
     if (surfReport && surfReport.hours && surfReport.hours.length > 0) {
-      const currentTimePeriod = surfReport.hours[0];
-      const currentSwellHeight = Math.ceil(3.28*currentTimePeriod.swellHeight.noaa);
-      const currentSwellPeriod = Math.ceil(currentTimePeriod.swellPeriod.noaa);
-      const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
-      const currentWindSpeed = Math.ceil(currentTimePeriod.windSpeed.noaa);
-      const currentWindDirection = currentTimePeriod.windDirection.noaa;
-      const currentSurfReportHTML = 
-      `<h2>${currentSurfSpot}</h2>
+        const currentTimePeriod = surfReport.hours[0];
+        const currentSwellHeight = Math.ceil(3.28 * currentTimePeriod.swellHeight.noaa);
+        const currentSwellPeriod = Math.ceil(currentTimePeriod.swellPeriod.noaa);
+        const currentSwellDirection = currentTimePeriod.swellDirection.noaa;
+        const currentWindSpeed = Math.ceil(currentTimePeriod.windSpeed.noaa);
+        const currentWindDirection = currentTimePeriod.windDirection.noaa;
+        const currentSurfReportHTML =
+            `<h2>${currentSurfSpot}</h2>
       <p>Swell Height: ${currentSwellHeight}ft.</p>
       <p>Swell Period: @ ${currentSwellPeriod} secs</p>
       <p>Swell Direction (of origin): ${getCardinalDirection(currentSwellDirection)}</p>
       <p>Wind: ${currentWindSpeed} mph from the ${getCardinalDirection(currentWindDirection)}</p>`
 
-  
-      currentSurfReportElement.innerHTML = currentSurfReportHTML;
+
+        currentSurfReportElement.innerHTML = currentSurfReportHTML;
     } else {
-      currentSurfReportElement.innerHTML = "No surf report available";
+        currentSurfReportElement.innerHTML = "No surf report available";
     }
-  }
-  
-  searchWeatherButton.addEventListener("click", handleSearchButton);
+}
+
+searchWeatherButton.addEventListener("click", handleSearchButton);
 
 
