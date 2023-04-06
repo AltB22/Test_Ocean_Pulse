@@ -3,6 +3,13 @@ const clearCityHistoryButton = document.getElementById("clear-history-btn");
 let cityHistoryArr = [];
 let surfSpot = "";
 let currentSurfSpot = ""; // Define currentSurfSpot as a global variable
+let lat = 0;
+let lng = 0;
+let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
+let source = "noaa";
+const timeStamp = new Date().getTime();
+
+
 
 function getCardinalDirection(degrees) {
     const degreeRanges = [
@@ -46,12 +53,8 @@ function handleSearchButton(event) {
     }
 }
 
-let lat = "";
-let lng = "";
-let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
-let source = "noaa";
 async function getSurfReport(surfSpot) {
-    
+    // setIsLoading(true)
    
     switch (surfSpot) {
         case "Ocean Beach","ocean beach","San Francisco","san francisco":
@@ -68,10 +71,10 @@ async function getSurfReport(surfSpot) {
             break
     }
 
-
+   
     const response = await fetch(
-        // `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}`,
-        `https://api.stormglass.io/v2/weather/point?lat=37.75545&lng=-122.5292&params=${params}&source=${source}`,
+        `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}&timestamp=${timeStamp}`,
+        // `https://api.stormglass.io/v2/weather/point?lat=37.75545&lng=-122.5292&params=${params}&source=${source}`,
         {
             headers: {
                 Authorization:
@@ -83,6 +86,7 @@ async function getSurfReport(surfSpot) {
     const surfReport = await response.json();
     currentSurfSpot = surfSpot; // Assign the value of surfSpot to currentSurfSpot
     renderSurfForecast(surfReport);
+    setLatLon();
     return surfReport;
 }
 
@@ -109,6 +113,12 @@ function renderSurfForecast(surfReport) {
     } else {
         currentSurfReportElement.innerHTML = "No surf report available";
     }
+}
+
+function setLatLon(){
+    lat = '';
+    lng = '';
+    return;
 }
 
 searchWeatherButton.addEventListener("click", handleSearchButton);
