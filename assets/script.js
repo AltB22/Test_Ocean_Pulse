@@ -1,15 +1,14 @@
 const searchSurfForecastButton = document.getElementById("search-by-city-button");
 const clearCityHistoryButton = document.getElementById("clear-history-btn");
-let cityHistoryArr = [];
+const currentSurfReportElement = document.getElementById("current-surf-report");
+const timeStamp = new Date().getTime();
 let surfSpot = "";
-let currentSurfSpot = ""; // Define currentSurfSpot as a global variable
 let lat = 0;
 let lng = 0;
 let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
 let source = "noaa";
-const timeStamp = new Date().getTime();
-const currentSurfReportElement = document.getElementById("current-surf-report");
-
+// let currentSurfSpot = ""; 
+// let cityHistoryArr = [];
 
 function getCardinalDirection(degrees) {
     const degreeRanges = [
@@ -40,7 +39,6 @@ function getCardinalDirection(degrees) {
     return "N"; // default direction if degrees is not within any of the defined ranges
 }
 
-
 function handleSearchButton(event) {
     event.preventDefault();
 
@@ -67,7 +65,7 @@ function handleSearchButton(event) {
             case "RCAs Beach":
             case "RCA Beach":
             case "Bobo":
-            case "BOBO":
+            case "bobo":
                 getSurfReport(surfSpot, 37.9226, -122.7399);
                 break;
             default:
@@ -94,11 +92,8 @@ async function getSurfReport(surfSpot,lat,lng) {
     const surfReport = await response.json();
     // currentSurfSpot = surfSpot; // Assign the value of surfSpot to currentSurfSpot
     renderSurfForecast(surfReport);
-    surfSpot = '';
-    // setLatLon();
     return surfReport;
 }
-
 
 function renderSurfForecast(surfReport) {
 
@@ -116,19 +111,11 @@ function renderSurfForecast(surfReport) {
       <p>Swell Direction (of origin): ${getCardinalDirection(currentSwellDirection)}</p>
       <p>Wind: ${currentWindSpeed} mph from the ${getCardinalDirection(currentWindDirection)}</p>`
 
-
         currentSurfReportElement.innerHTML = currentSurfReportHTML;
-        // setLatLon();
     } else {
         currentSurfReportElement.innerHTML = "No surf report available";
     }
 }
-
-// function setLatLon() {
-//     lat = '';
-//     lng = '';
-//     return;
-// }
 
 searchSurfForecastButton.addEventListener("click", handleSearchButton);
 
