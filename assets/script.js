@@ -46,30 +46,32 @@ function handleSearchButton(event) {
     }
 }
 
+let lat = "";
+let lng = "";
+let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
+let source = "noaa";
 async function getSurfReport(surfSpot) {
-    let lat = "";
-    let lng = "";
-    let params = "swellHeight,swellPeriod,swellDirection,windSpeed,windDirection";
-    let source = "noaa";
+    
+   
     switch (surfSpot) {
-        case "Ocean Beach", "ocean beach","San Francisco","san francisco":
+        case "Ocean Beach","ocean beach","San Francisco","san francisco":
             lat = 37.75545;
             lng = -122.5292;
-
+            break
         case "Ruggles","ruggles","Newport","newport":
             lat = 41.37268;
             lng = -71.2410;
-
+            break
         case "Bolinas","bolinas","RCA's","RCA","RCAs Beach","RCA Beach","Bobo","BOBO":
-            // 37.92265591264701, -122.73999987093488
-            lat = 37.92265591264701;
-            lng = -122.73999987093488;
-
+            lat = 37.9226;
+            lng = -122.7399;
+            break
     }
 
 
     const response = await fetch(
-        `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}`,
+        // `https://api.stormglass.io/v2/weather/point?lat=${lat}&lng=${lng}&params=${params}&source=${source}`,
+        `https://api.stormglass.io/v2/weather/point?lat=37.75545&lng=-122.5292&params=${params}&source=${source}`,
         {
             headers: {
                 Authorization:
